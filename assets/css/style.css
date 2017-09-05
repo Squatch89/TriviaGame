@@ -16,7 +16,7 @@ h2
 
 .question
 {
-    text-align: center;
+
 }
 
 #play-area
@@ -24,5 +24,6 @@ h2
     width: 75%;
     margin: auto;
     background-color: beige;
+    text-align: center;
 }
 
