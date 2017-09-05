@@ -14,9 +14,18 @@ h2
     font-size: 24px;
 }
 
-.question
+.answer
 {
+    width: 10%;
+    margin: auto;
+    text-align: center;
+    
+}
 
+.answer:hover
+{
+    background-color: black;
+    color: white;
 }
 
 #play-area
