@@ -75,11 +75,10 @@ $(document).ready(function () {
             questionCount++;
         });
     
+    $("#done").on("click", stop);
     
     //display the question and the possible answers
     function showQuestion() {
-        console.log("this is the show question function");
-        console.log(questionCount);
         if (questionCount === questionsObj.length) {
             stop();
         }
@@ -93,8 +92,6 @@ $(document).ready(function () {
         }
     }
     
-    $("#done").on("click", stop);
-    
     //create timer/interval
     function countdown() {
         time--;
@@ -107,10 +104,12 @@ $(document).ready(function () {
     
     function questionCountdown() {
         questionTime--;
-        console.log(questionTime);
         if (questionTime === 0) {
             questionCount++;
             showQuestion();
+        }
+        else if (questionCount === questionsObj.length) {
+            stop();
         }
     }
     //reset question countdown timer
