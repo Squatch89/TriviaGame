@@ -30,7 +30,6 @@ $(document).ready(function () {
     var questionTimer;
     var time = 30;
     var questionTime = 5;
-    var yourAnswer;
     
     //click on start button. Start and display timer, display questions and hide start button
     $("#start").on("click", function() {
@@ -45,10 +44,13 @@ $(document).ready(function () {
        timer = setInterval(countdown, 1000);
        showQuestion();
        questionTimer = setInterval(questionCountdown, 1000);
+     
     });
     
         $(".answer").on("click", function() {
             clearInterval(questionTimer);
+            clearInterval(timer);
+            console.log(questionTimer);
             //display the correct answer info between questions
             if ( $(this).text() === questionsObj[questionCount].answer) {
                 $("#question").html("You chose correct! The answer was: " + questionsObj[questionCount].answer);
@@ -57,6 +59,8 @@ $(document).ready(function () {
                 console.log("yay right answer");
                 //set timeout between questions
                 setTimeout(showQuestion, 3000);
+                setTimeout(resetQC, 3000);
+                setTimeout(resetTimer, 3000);
             }
             else {
                 $("#question").html("You  chose incorrect. The correct answer was: " + questionsObj[questionCount].answer);
@@ -64,6 +68,8 @@ $(document).ready(function () {
                 unanswered--;
                 console.log("boo incorrect");
                 setTimeout(showQuestion, 3000);
+                setTimeout(resetQC, 3000);
+                setTimeout(resetTimer, 3000);
             }
             $(".answer").empty();
             questionCount++;
@@ -72,7 +78,8 @@ $(document).ready(function () {
     
     //display the question and the possible answers
     function showQuestion() {
-        questionTime = 5;
+        console.log("this is the show question function");
+        console.log(questionCount);
         if (questionCount === questionsObj.length) {
             stop();
         }
@@ -82,6 +89,7 @@ $(document).ready(function () {
             $("#answer2").html(questionsObj[questionCount].choices[1]);
             $("#answer3").html(questionsObj[questionCount].choices[2]);
             $("#answer4").html(questionsObj[questionCount].choices[3]);
+            questionTime = 5;
         }
     }
     
@@ -104,6 +112,15 @@ $(document).ready(function () {
             questionCount++;
             showQuestion();
         }
+    }
+    //reset question countdown timer
+    function resetQC() {
+        questionTimer = setInterval(questionCountdown, 1000);
+    }
+    
+    //reset timer
+    function resetTimer() {
+        timer = setInterval(countdown, 1000);
     }
     
     //end game if timer runs out display the number of correct and incorrect answers and how many went unanswered
