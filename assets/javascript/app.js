@@ -24,11 +24,12 @@ var correct = 0;
 var incorrect =0;
 var unanswered = questionsObj.length;
 
-
 $(document).ready(function () {
     
     var timer;
+    var questionTimer;
     var time = 30;
+    var questionTime = 5;
     var yourAnswer;
     
     //click on start button. Start and display timer, display questions and hide start button
@@ -42,17 +43,19 @@ $(document).ready(function () {
         
         // start timer
        timer = setInterval(countdown, 1000);
-       
        showQuestion();
+       questionTimer = setInterval(questionCountdown, 1000);
     });
     
-        $(".answer").on("click", function () {
-            yourAnswer = $(this).text();
-            if ( yourAnswer === questionsObj[questionCount].answer) {
+        $(".answer").on("click", function() {
+            clearInterval(questionTimer);
+            //display the correct answer info between questions
+            if ( $(this).text() === questionsObj[questionCount].answer) {
                 $("#question").html("You chose correct! The answer was: " + questionsObj[questionCount].answer);
                 correct++;
                 unanswered--;
                 console.log("yay right answer");
+                //set timeout between questions
                 setTimeout(showQuestion, 3000);
             }
             else {
@@ -63,19 +66,13 @@ $(document).ready(function () {
                 setTimeout(showQuestion, 3000);
             }
             $(".answer").empty();
-    
             questionCount++;
-            
         });
     
-    //set timeout for screen between
-    
-    //display the correct answer info between questions
-    
-    //continue on with the questions
     
     //display the question and the possible answers
     function showQuestion() {
+        questionTime = 5;
         if (questionCount === questionsObj.length) {
             stop();
         }
@@ -86,7 +83,7 @@ $(document).ready(function () {
             $("#answer3").html(questionsObj[questionCount].choices[2]);
             $("#answer4").html(questionsObj[questionCount].choices[3]);
         }
-    };
+    }
     
     $("#done").on("click", stop);
     
@@ -100,9 +97,19 @@ $(document).ready(function () {
         }
     }
     
+    function questionCountdown() {
+        questionTime--;
+        console.log(questionTime);
+        if (questionTime === 0) {
+            questionCount++;
+            showQuestion();
+        }
+    }
+    
     //end game if timer runs out display the number of correct and incorrect answers and how many went unanswered
     function stop() {
         clearInterval(timer);
+        clearInterval(questionTimer);
         $(".question").hide();
         $("#done").hide();
         $("#timer").hide();
