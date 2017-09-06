@@ -14,7 +14,7 @@ var questionsObj = [
     {
         question: "This is questions 2",
         choices: ["new answer1", "new answer2", "new answer3", "new answer4"],
-        answer: "answer3"
+        answer: "new answer3"
     }
     
 ];
@@ -29,6 +29,7 @@ $(document).ready(function () {
     
     var timer;
     var time = 30;
+    var yourAnswer;
     
     //click on start button. Start and display timer, display questions and hide start button
     $("#start").on("click", function() {
@@ -45,29 +46,27 @@ $(document).ready(function () {
        showQuestion();
     });
     
-    $(".answer").on("click", function() {
-       
-        if (questionCount === questionsObj.length) {
-           stop();
-       }
-       else {
-           if ($(this).text() === questionsObj[questionCount].answer) {
-               console.log("yay right answer");
-               questionCount++;
-               correct++;
-               unanswered--;
-               showQuestion();
-           }
-           else {
-               console.log("boo wrong answer");
-               questionCount++;
-               incorrect++;
-               unanswered--;
-               showQuestion();
-           }
-           
-       }
-    });
+        $(".answer").on("click", function () {
+            yourAnswer = $(this).text();
+            if ( yourAnswer === questionsObj[questionCount].answer) {
+                $("#question").html("You chose correct! The answer was: " + questionsObj[questionCount].answer);
+                correct++;
+                unanswered--;
+                console.log("yay right answer");
+                setTimeout(showQuestion, 3000);
+            }
+            else {
+                $("#question").html("You  chose incorrect. The correct answer was: " + questionsObj[questionCount].answer);
+                incorrect++;
+                unanswered--;
+                console.log("boo incorrect");
+                setTimeout(showQuestion, 3000);
+            }
+            $(".answer").empty();
+    
+            questionCount++;
+            
+        });
     
     //set timeout for screen between
     
@@ -77,11 +76,16 @@ $(document).ready(function () {
     
     //display the question and the possible answers
     function showQuestion() {
-    $("#question").html(questionsObj[questionCount].question);
-    $("#answer1").html(questionsObj[questionCount].choices[0]);
-    $("#answer2").html(questionsObj[questionCount].choices[1]);
-    $("#answer3").html(questionsObj[questionCount].choices[2]);
-    $("#answer4").html(questionsObj[questionCount].choices[3]);
+        if (questionCount === questionsObj.length) {
+            stop();
+        }
+        else {
+            $("#question").html(questionsObj[questionCount].question);
+            $("#answer1").html(questionsObj[questionCount].choices[0]);
+            $("#answer2").html(questionsObj[questionCount].choices[1]);
+            $("#answer3").html(questionsObj[questionCount].choices[2]);
+            $("#answer4").html(questionsObj[questionCount].choices[3]);
+        }
     };
     
     $("#done").on("click", stop);
