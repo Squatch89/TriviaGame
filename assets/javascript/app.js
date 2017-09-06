@@ -4,22 +4,25 @@ $("#done").hide();
 $("#timer").hide();
 $("#stats").hide();
 
-var questionCount = 0;
-var correct = 0;
-var incorrect =0;
-
 var questionsObj = [
     {
         question: "This is questions 1",
         choices: ["answer1", "answer2", "answer3", "answer4"],
         answer: "answer1"
     },
+    
     {
         question: "This is questions 2",
-        choices: ["answer1", "answer2", "answer3", "answer4"],
+        choices: ["new answer1", "new answer2", "new answer3", "new answer4"],
         answer: "answer3"
     }
+    
 ];
+
+var questionCount = 0;
+var correct = 0;
+var incorrect =0;
+var unanswered = questionsObj.length;
 
 
 $(document).ready(function () {
@@ -41,13 +44,36 @@ $(document).ready(function () {
        showQuestion();
     });
     
+    $(".answer").on("click", function() {
+        
+      if ( $(this).text() === questionsObj[questionCount].answer) {
+          console.log("yay right answer");
+          questionCount++;
+          correct++;
+          unanswered--;
+          showQuestion();
+      }
+      else {
+          console.log("boo wrong answer");
+          questionCount++;
+          incorrect++;
+          unanswered--
+          showQuestion();
+      }
+      
+    });
+    
+    // if (questionsObj.length === questionCount) {
+    //     stop();
+    // }
+    
+    //display the question and the possible answers
     function showQuestion() {
     $("#question").html(questionsObj[questionCount].question);
     $("#answer1").html(questionsObj[questionCount].choices[0]);
     $("#answer2").html(questionsObj[questionCount].choices[1]);
     $("#answer3").html(questionsObj[questionCount].choices[2]);
     $("#answer4").html(questionsObj[questionCount].choices[3]);
-    
     };
     
     $("#done").on("click", stop);
@@ -72,6 +98,9 @@ $(document).ready(function () {
         $("#start").show();
         time = 30;
         $("#timer").html("<h2>" + time + "</h2>");
+        $("#correct").html("<p>" + "Correct Answers: " + correct + " </p>");
+        $("#wrong").html("<p>" + "Incorrect Answers: " + incorrect + "</p>");
+        $("#unanswered").html("<p>" + "Unanswered Questions: " + unanswered + "</p>");
         
         //display the stats
     }
