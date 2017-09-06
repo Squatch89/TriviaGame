@@ -38,6 +38,7 @@ $(document).ready(function () {
         $("#done").show();
         $("#stats").hide();
         $("#start").hide();
+        
         // start timer
        timer = setInterval(countdown, 1000);
        
@@ -45,27 +46,34 @@ $(document).ready(function () {
     });
     
     $(".answer").on("click", function() {
-        
-      if ( $(this).text() === questionsObj[questionCount].answer) {
-          console.log("yay right answer");
-          questionCount++;
-          correct++;
-          unanswered--;
-          showQuestion();
-      }
-      else {
-          console.log("boo wrong answer");
-          questionCount++;
-          incorrect++;
-          unanswered--
-          showQuestion();
-      }
-      
+       
+        if (questionCount === questionsObj.length) {
+           stop();
+       }
+       else {
+           if ($(this).text() === questionsObj[questionCount].answer) {
+               console.log("yay right answer");
+               questionCount++;
+               correct++;
+               unanswered--;
+               showQuestion();
+           }
+           else {
+               console.log("boo wrong answer");
+               questionCount++;
+               incorrect++;
+               unanswered--;
+               showQuestion();
+           }
+           
+       }
     });
     
-    // if (questionsObj.length === questionCount) {
-    //     stop();
-    // }
+    //set timeout for screen between
+    
+    //display the correct answer info between questions
+    
+    //continue on with the questions
     
     //display the question and the possible answers
     function showQuestion() {
@@ -104,7 +112,6 @@ $(document).ready(function () {
         
         //display the stats
     }
-    
     
 });
 
