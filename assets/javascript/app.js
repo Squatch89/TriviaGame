@@ -6,15 +6,39 @@ $("#stats").hide();
 
 var questionsObj = [
     {
-        question: "This is questions 1",
-        choices: ["answer1", "answer2", "answer3", "answer4"],
-        answer: "answer1"
+        question: "How many moons does Jupiter have?",
+        choices: ["42", "53", "25", "13"],
+        answer: "53"
     },
     
     {
-        question: "This is questions 2",
-        choices: ["new answer1", "new answer2", "new answer3", "new answer4"],
-        answer: "new answer3"
+        question: "How long does it take for sun light to reach earth?",
+        choices: ["1 month", "1 hour 35 min", "35 seconds", "8 min 20 sec"],
+        answer: "8 min 20 sec"
+    },
+    
+    {
+        question: "How much does a neutron star weigh?",
+        choices: ["10 billion  tons", "10 million tons", "10 tons", "0 tons"],
+        answer: "10 million tons"
+    },
+    
+    {
+        question: "How many earths can fit in Uranus?",
+        choices: ["63", "43", "125", "12"],
+        answer: "63"
+    },
+    
+    {
+        question: "How many earth days is a day on Mercury?",
+        choices: ["48.9", "43.2", "23.4", "58.6"],
+        answer: "58.6"
+    },
+    
+    {
+        question: "How far away is the Sun from Earth?",
+        choices: ["93 million", "145 million", "25 million", "87 million"],
+        answer: "93 million"
     }
     
 ];
