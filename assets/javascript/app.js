@@ -98,7 +98,6 @@ $(document).ready(function () {
     function start() {
         $("#timer").show();
         $(".question").show();
-        $("#stats").hide();
         $("#start").hide();
         $("#reset").hide();
     
