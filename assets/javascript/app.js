@@ -1,6 +1,6 @@
 //hide all elements besides title and start button
 $(".question").hide();
-$("#done").hide();
+$("#reset").hide();
 $("#timer").hide();
 $("#stats").hide();
 
@@ -34,16 +34,7 @@ $(document).ready(function () {
     //click on start button. Start and display timer, display questions and hide start button
     $("#start").on("click", function() {
         
-        $("#timer").show();
-        $(".question").show();
-        $("#done").show();
-        $("#stats").hide();
-        $("#start").hide();
-        
-        // start timer
-       timer = setInterval(countdown, 1000);
-       showQuestion();
-       questionTimer = setInterval(questionCountdown, 1000);
+        start();
      
     });
     
@@ -75,7 +66,23 @@ $(document).ready(function () {
             questionCount++;
         });
     
-    $("#done").on("click", stop);
+    $("#reset").on("click", function() {
+        reset();
+        $("#reset").hide();
+    });
+    
+    function start() {
+        $("#timer").show();
+        $(".question").show();
+        $("#stats").hide();
+        $("#start").hide();
+        $("#reset").hide();
+    
+        // start timer
+        timer = setInterval(countdown, 1000);
+        showQuestion();
+        questionTimer = setInterval(questionCountdown, 1000);
+    }
     
     //display the question and the possible answers
     function showQuestion() {
@@ -127,17 +134,38 @@ $(document).ready(function () {
         clearInterval(timer);
         clearInterval(questionTimer);
         $(".question").hide();
-        $("#done").hide();
         $("#timer").hide();
         $("#stats").show();
-        $("#start").show();
         time = 30;
+        displayResults();
+        setTimeout(empty, 5000);
+        //display the stats
+    }
+    
+    function displayResults() {
         $("#timer").html("<h2>" + time + "</h2>");
         $("#correct").html("<p>" + "Correct Answers: " + correct + " </p>");
         $("#wrong").html("<p>" + "Incorrect Answers: " + incorrect + "</p>");
         $("#unanswered").html("<p>" + "Unanswered Questions: " + unanswered + "</p>");
+    }
+    
+    function empty() {
+        $("#stats").hide();
+        $("#reset").show();
+    }
+    
+    function reset() {
+        questionCount = 0;
+        correct = 0;
+        incorrect =0;
+        unanswered = questionsObj.length;
+        timer;
+        questionTimer;
+        time = 30;
+        questionTime = 5;
+        $(".question").show();
+        start();
         
-        //display the stats
     }
     
 });
